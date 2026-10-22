@@ -51,33 +51,41 @@
     });
   }
 
+  // --- Cấu hình nhận thông báo qua Telegram (Tùy chọn) ---
+  // Nếu có dùng Telegram Bot, hãy điền token & chatId vào 2 biến dưới đây; nếu không dùng cứ để trống ""
+  const TELEGRAM_BOT_TOKEN = "";
+  const TELEGRAM_CHAT_ID = "";
+
   function notifyTelegram(eventLabel, storageKey) {
-    const token = String(TELEGRAM_BOT_TOKEN || "").trim();
-    const chatId = String(TELEGRAM_CHAT_ID || "").trim();
-    if (!token || !chatId) return;
-    if (storageKey && sessionStorage.getItem(storageKey)) return;
-    if (storageKey) sessionStorage.setItem(storageKey, "1");
-
-    const now = new Date().toLocaleString("vi-VN", {
-      timeZone: "Asia/Ho_Chi_Minh",
-    });
-    const isPhone = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-    const source = document.referrer ? document.referrer : "mở trực tiếp";
-    const text = [
-      eventLabel,
-      `⏰ ${now}`,
-      `📱 ${isPhone ? "Điện thoại" : "Máy tính"}`,
-      `🔗 ${source}`,
-    ].join("\n");
-
-    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chatId)}&text=${encodeURIComponent(text)}`;
     try {
+      const token = typeof TELEGRAM_BOT_TOKEN !== "undefined"
+        ? String(TELEGRAM_BOT_TOKEN || "").trim()
+        : (typeof window !== "undefined" && window.TELEGRAM_BOT_TOKEN ? String(window.TELEGRAM_BOT_TOKEN).trim() : "");
+      const chatId = typeof TELEGRAM_CHAT_ID !== "undefined"
+        ? String(TELEGRAM_CHAT_ID || "").trim()
+        : (typeof window !== "undefined" && window.TELEGRAM_CHAT_ID ? String(window.TELEGRAM_CHAT_ID).trim() : "");
+      if (!token || !chatId) return;
+      if (storageKey && sessionStorage.getItem(storageKey)) return;
+      if (storageKey) sessionStorage.setItem(storageKey, "1");
+
+      const now = new Date().toLocaleString("vi-VN", {
+        timeZone: "Asia/Ho_Chi_Minh",
+      });
+      const isPhone = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      const source = document.referrer ? document.referrer : "mở trực tiếp";
+      const text = [
+        eventLabel,
+        `⏰ ${now}`,
+        `📱 ${isPhone ? "Điện thoại" : "Máy tính"}`,
+        `🔗 ${source}`,
+      ].join("\n");
+
+      const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chatId)}&text=${encodeURIComponent(text)}`;
       fetch(url, { method: "GET", mode: "no-cors", keepalive: true }).catch(
         () => {},
       );
     } catch (e) {
-      const beacon = new Image();
-      beacon.src = url;
+      console.warn("Lỗi gửi thông báo Telegram:", e);
     }
   }
 
@@ -345,8 +353,8 @@
   const HOLD_DURATION = 2000; // 2 giây
 
   function startHold(e) {
-    if (hasUnlocked) return;
-    if (e.cancelable) e.preventDefault();
+    if (hasUnlocked || isHolding) return;
+    if (e && e.cancelable) e.preventDefault();
     warmUpAudio();
 
     if (bgMusic) {
@@ -357,7 +365,11 @@
     holdStartTime = performance.now();
     touchArea.classList.add("holding");
 
-    if (navigator.vibrate) navigator.vibrate([40, 20, 40]);
+    if (navigator.vibrate) {
+      try {
+        navigator.vibrate([40, 20, 40]);
+      } catch (err) {}
+    }
     lastVibrateTick = holdStartTime;
 
     cancelAnimationFrame(holdAnimFrame);
@@ -375,7 +387,11 @@
 
     // Rung nhẹ mỗi 400ms tạo cảm giác nạp năng lượng chân thực
     if (now - lastVibrateTick > 400) {
-      if (navigator.vibrate) navigator.vibrate(25);
+      if (navigator.vibrate) {
+        try {
+          navigator.vibrate(25);
+        } catch (err) {}
+      }
       lastVibrateTick = now;
     }
 
@@ -427,8 +443,12 @@
   touchArea.addEventListener("touchcancel", endHold);
 
   touchArea.addEventListener("mousedown", startHold);
-  touchArea.addEventListener("mouseup", endHold);
-  touchArea.addEventListener("mouseleave", endHold);
+  window.addEventListener("mouseup", (e) => {
+    if (isHolding) endHold(e);
+  });
+  touchArea.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
 
   // ============================================================
   // 5. HIỆU ỨNG MỞ QUÀ BÙNG NỔ (REVEAL MAGIC)
@@ -436,14 +456,30 @@
   function triggerUnlockMagic() {
     hasUnlocked = true;
     isHolding = false;
-    notifyTelegram(
-      "🎁 Có người đã dí tay 2 giây và mở quà",
-      "hpbdc_tg_unlocked",
-    );
+    cancelAnimationFrame(holdAnimFrame);
+
     touchArea.classList.remove("holding");
     progressFill.style.strokeDashoffset = 0;
 
-    if (navigator.vibrate) navigator.vibrate([80, 40, 120, 40, 200]);
+    if (navigator.vibrate) {
+      try {
+        navigator.vibrate([80, 40, 120, 40, 200]);
+      } catch (err) {}
+    }
+
+    // Gửi thông báo an toàn, tuyệt đối không bao giờ làm gián đoạn hiệu ứng mở quà
+    try {
+      notifyTelegram(
+        "🎁 Có người đã dí tay 2 giây và mở quà",
+        "hpbdc_tg_unlocked",
+      );
+      if (typeof emailjs !== "undefined" && !sessionStorage.getItem("hpbdc_email_unlocked")) {
+        sessionStorage.setItem("hpbdc_email_unlocked", "1");
+        emailjs.send("service_gi70snv", "template_stkadco", {}).catch(() => {});
+      }
+    } catch (err) {
+      console.warn("Lỗi gửi thông báo mở quà:", err);
+    }
 
     // Chớp sáng màn hình
     const flash = document.createElement("div");

@@ -9,46 +9,76 @@
 
 (() => {
   // --- Biến tham chiếu DOM ---
-  const fireworksCanvas = document.getElementById('fireworksCanvas');
-  const fwCtx = fireworksCanvas.getContext('2d');
-  const sparklerCanvas = document.getElementById('sparklerCanvas');
-  const sparkCtx = sparklerCanvas ? sparklerCanvas.getContext('2d') : null;
-  const balloonsContainer = document.getElementById('balloonsContainer');
-  const catsContainer = document.getElementById('catsContainer');
+  const fireworksCanvas = document.getElementById("fireworksCanvas");
+  const fwCtx = fireworksCanvas.getContext("2d");
+  const sparklerCanvas = document.getElementById("sparklerCanvas");
+  const sparkCtx = sparklerCanvas ? sparklerCanvas.getContext("2d") : null;
+  const balloonsContainer = document.getElementById("balloonsContainer");
+  const catsContainer = document.getElementById("catsContainer");
 
-  const introScreen = document.getElementById('introScreen');
-  const giftScreen = document.getElementById('giftScreen');
+  const introScreen = document.getElementById("introScreen");
+  const giftScreen = document.getElementById("giftScreen");
 
-  const touchArea = document.getElementById('touchArea');
-  const progressFill = document.getElementById('progressFill');
-  const timerCountdown = document.getElementById('timerCountdown');
-  const touchPrompt = document.getElementById('touchPrompt');
+  const touchArea = document.getElementById("touchArea");
+  const progressFill = document.getElementById("progressFill");
+  const timerCountdown = document.getElementById("timerCountdown");
+  const touchPrompt = document.getElementById("touchPrompt");
 
-  const bgMusic = document.getElementById('bgMusic');
-  const sparkCore = document.getElementById('sparkCore');
+  const bgMusic = document.getElementById("bgMusic");
+  const sparkCore = document.getElementById("sparkCore");
 
   // Chu vi vòng tròn tiến trình (2 * PI * 72 ≈ 452.389)
   const RING_CIRCUMFERENCE = 452.389;
 
   const LETTER_PARAGRAPHS = [
-    'Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, xinh đẹp, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.',
-    'Sau thời gian chia tay, tớ đã nghiêm túc nhìn lại quãng thời gian mình bên nhau. Tớ nhận ra những vấn đề giữa 2 người chưa thực sự được giải quyết, và tớ đã không hiểu hết được những tổn thương, đau đớn và sự kiệt sức mà cậu đã trải qua. Tớ bỏ qua cảm xúc của cậu, nóng nảy, vội vàng, thiếu kiên nhẫn, tạo ra áp lực trong mối quan hệ. Tớ cũng hiểu rằng có những lời xin lỗi hay lời hứa không thể lập tức lấy lại niềm tin đã mất.',
-    'Tớ cũng đang cố gắng từng ngày, chăm chỉ hơn trong học tập, tập gym, ăn uống điều độ hơn và học cách yêu thương, trân trọng những người xung quanh, biết lắng nghe, biết tôn trọng và quan tâm hơn. Tớ cũng học cách kiểm soát cơn giận, bình tĩnh hơn khi có mâu thuẫn và giải quyết vấn đề một cách trưởng thành thay vì để cảm xúc làm tổn thương những người mình yêu thương.',
-    'Tớ rất trân trọng những điều ở cậu, từ những sở thích, mindset luôn muốn đi lên và sự hiểu chuyện mà cậu đã dành cho tớ.',
-    'Thật lòng thì tớ vẫn còn tình cảm với cậu, và nếu một ngày nào đó cậu cũng muốn cho hai đứa một cơ hội, tớ vẫn mong mình có thể bắt đầu lại bằng một cách tốt đẹp hơn, bằng hành động chứ không chỉ bằng lời nói. Nhưng tớ hiểu hiện tại cậu muốn có không gian riêng, và tớ tôn trọng điều đó.',
-    'Hôm nay tớ chỉ mong cậu có một sinh nhật thật vui vẻ, được làm những điều mình thích và ở bên những người khiến cậu cảm thấy bình yên.',
-    'Chúc mừng sinh nhật cậu nhé ✨',
+    "Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, xinh đẹp, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.",
+    "Sau thời gian chia tay, tớ đã nghiêm túc nhìn lại quãng thời gian mình bên nhau. Tớ nhận ra những vấn đề giữa 2 người chưa thực sự được giải quyết, và tớ đã không hiểu hết được những tổn thương, đau đớn và sự kiệt sức mà cậu đã trải qua. Tớ bỏ qua cảm xúc của cậu, nóng nảy, vội vàng, thiếu kiên nhẫn, tạo ra áp lực trong mối quan hệ. Tớ cũng hiểu rằng có những lời xin lỗi hay lời hứa không thể lập tức lấy lại niềm tin đã mất.",
+    "Tớ cũng đang cố gắng từng ngày, chăm chỉ hơn trong học tập, tập gym, ăn uống điều độ hơn và học cách yêu thương, trân trọng những người xung quanh, biết lắng nghe, biết tôn trọng và quan tâm hơn. Tớ cũng học cách kiểm soát cơn giận, bình tĩnh hơn khi có mâu thuẫn và giải quyết vấn đề một cách trưởng thành thay vì để cảm xúc làm tổn thương những người mình yêu thương.",
+    "Tớ rất trân trọng những điều ở cậu, từ những sở thích, mindset luôn muốn đi lên và sự hiểu chuyện mà cậu đã dành cho tớ.",
+    "Thật lòng thì tớ vẫn còn tình cảm với cậu, và nếu một ngày nào đó cậu cũng muốn cho hai đứa một cơ hội, tớ vẫn mong mình có thể bắt đầu lại bằng một cách tốt đẹp hơn, bằng hành động chứ không chỉ bằng lời nói. Nhưng tớ hiểu hiện tại cậu muốn có không gian riêng, và tớ tôn trọng điều đó.",
+    "Hôm nay tớ chỉ mong cậu có một sinh nhật thật vui vẻ, được làm những điều mình thích và ở bên những người khiến cậu cảm thấy bình yên.",
+    "Chúc mừng sinh nhật cậu nhé ✨",
   ];
 
   function fillLetterContent() {
-    const letterContent = document.getElementById('letterContent');
+    const letterContent = document.getElementById("letterContent");
     if (!letterContent || letterContent.childElementCount > 0) return;
 
     LETTER_PARAGRAPHS.forEach((text) => {
-      const paragraph = document.createElement('p');
+      const paragraph = document.createElement("p");
       paragraph.textContent = text;
       letterContent.appendChild(paragraph);
     });
+  }
+
+  function notifyTelegram(eventLabel, storageKey) {
+    const token = String(TELEGRAM_BOT_TOKEN || "").trim();
+    const chatId = String(TELEGRAM_CHAT_ID || "").trim();
+    if (!token || !chatId) return;
+    if (storageKey && sessionStorage.getItem(storageKey)) return;
+    if (storageKey) sessionStorage.setItem(storageKey, "1");
+
+    const now = new Date().toLocaleString("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh",
+    });
+    const isPhone = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    const source = document.referrer ? document.referrer : "mở trực tiếp";
+    const text = [
+      eventLabel,
+      `⏰ ${now}`,
+      `📱 ${isPhone ? "Điện thoại" : "Máy tính"}`,
+      `🔗 ${source}`,
+    ].join("\n");
+
+    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${encodeURIComponent(chatId)}&text=${encodeURIComponent(text)}`;
+    try {
+      fetch(url, { method: "GET", mode: "no-cors", keepalive: true }).catch(
+        () => {},
+      );
+    } catch (e) {
+      const beacon = new Image();
+      beacon.src = url;
+    }
   }
 
   // --- Trạng thái hệ thống ---
@@ -77,7 +107,7 @@
       sparklerCanvas.height = rect.height;
     }
   }
-  window.addEventListener('resize', resizeCanvases);
+  window.addEventListener("resize", resizeCanvases);
   resizeCanvases();
 
   // Khởi động trước Audio Context khi người dùng chạm
@@ -87,7 +117,7 @@
       if (AudioContext && !webAudioCtx) {
         webAudioCtx = new AudioContext();
       }
-      if (webAudioCtx && webAudioCtx.state === 'suspended') {
+      if (webAudioCtx && webAudioCtx.state === "suspended") {
         webAudioCtx.resume();
       }
     } catch (e) {}
@@ -97,7 +127,17 @@
   // 1. ENGINE PHÁO HOA NỀN RỰC RỠ
   // ============================================================
   const fwParticles = [];
-  const fwColors = ['#ff2d60', '#ff8da7', '#ffd166', '#06d6a0', '#118ab2', '#ff5470', '#ffffff', '#e0aaff', '#ff9f1c'];
+  const fwColors = [
+    "#ff2d60",
+    "#ff8da7",
+    "#ffd166",
+    "#06d6a0",
+    "#118ab2",
+    "#ff5470",
+    "#ffffff",
+    "#e0aaff",
+    "#ff9f1c",
+  ];
 
   class FireworkParticle {
     constructor(x, y, color) {
@@ -167,22 +207,23 @@
   // 2. BÓNG BAY LƠ LỬNG NHIỀU MÀU SẮC
   // ============================================================
   const balloonColors = [
-    'linear-gradient(135deg, #ff758f, #ff4d6d)',
-    'linear-gradient(135deg, #ffd166, #ff9f1c)',
-    'linear-gradient(135deg, #c77dff, #9d4edd)',
-    'linear-gradient(135deg, #a0c4ff, #4361ee)',
-    'linear-gradient(135deg, #b9fbc0, #57cc99)',
-    'linear-gradient(135deg, #ffb3c6, #ff5c8a)'
+    "linear-gradient(135deg, #ff758f, #ff4d6d)",
+    "linear-gradient(135deg, #ffd166, #ff9f1c)",
+    "linear-gradient(135deg, #c77dff, #9d4edd)",
+    "linear-gradient(135deg, #a0c4ff, #4361ee)",
+    "linear-gradient(135deg, #b9fbc0, #57cc99)",
+    "linear-gradient(135deg, #ffb3c6, #ff5c8a)",
   ];
 
   function spawnBalloon() {
     if (!balloonsContainer) return;
-    const balloon = document.createElement('div');
-    balloon.className = 'balloon';
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
     const leftPos = Math.random() * 92;
     const dur = Math.random() * 5 + 10;
     const scale = Math.random() * 0.35 + 0.85;
-    const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+    const color =
+      balloonColors[Math.floor(Math.random() * balloonColors.length)];
 
     balloon.style.left = `${leftPos}%`;
     balloon.style.background = color;
@@ -206,17 +247,17 @@
   // ============================================================
   const cuteFeminineCatPhotos = [
     // Bé mèo trắng mắt biếc dịu dàng
-    'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=260&auto=format&fit=crop&q=80',
+    "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=260&auto=format&fit=crop&q=80",
     // Bé mèo xinh bên hoa cỏ
-    'https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?w=260&auto=format&fit=crop&q=80',
+    "https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?w=260&auto=format&fit=crop&q=80",
     // Bé mèo cuộn tròn đáng yêu
-    'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=260&auto=format&fit=crop&q=80',
+    "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=260&auto=format&fit=crop&q=80",
     // Mèo công chúa lông xù ngây thơ
-    'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=260&auto=format&fit=crop&q=80',
+    "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=260&auto=format&fit=crop&q=80",
     // Bé mèo vàng mắt long lanh
-    'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=260&auto=format&fit=crop&q=80',
+    "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=260&auto=format&fit=crop&q=80",
     // Bé mèo mũi hồng siêu cưng
-    'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=260&auto=format&fit=crop&q=80'
+    "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=260&auto=format&fit=crop&q=80",
   ];
 
   function playCuteMeowSound() {
@@ -226,7 +267,7 @@
       const osc = webAudioCtx.createOscillator();
       const gain = webAudioCtx.createGain();
 
-      osc.type = 'sine';
+      osc.type = "sine";
       const now = webAudioCtx.currentTime;
       osc.frequency.setValueAtTime(680, now);
       osc.frequency.exponentialRampToValueAtTime(1150, now + 0.15);
@@ -245,19 +286,23 @@
 
   function spawnCuteCat() {
     if (!catsContainer) return;
-    const catEl = document.createElement('div');
-    catEl.className = 'floating-cat';
+    const catEl = document.createElement("div");
+    catEl.className = "floating-cat";
 
     // Vị trí ngẫu nhiên ở 2 bên màn hình
-    const posX = Math.random() > 0.5
-      ? Math.random() * 25 + 3   // Bên trái (3% - 28%)
-      : Math.random() * 25 + 68;  // Bên phải (68% - 93%)
+    const posX =
+      Math.random() > 0.5
+        ? Math.random() * 25 + 3 // Bên trái (3% - 28%)
+        : Math.random() * 25 + 68; // Bên phải (68% - 93%)
     const posY = Math.random() * 65 + 16; // Chiều cao (16% - 81%)
 
     catEl.style.left = `${posX}%`;
     catEl.style.top = `${posY}%`;
 
-    const imgUrl = cuteFeminineCatPhotos[Math.floor(Math.random() * cuteFeminineCatPhotos.length)];
+    const imgUrl =
+      cuteFeminineCatPhotos[
+        Math.floor(Math.random() * cuteFeminineCatPhotos.length)
+      ];
     // CHỈ HIỆN ẢNH MÈO CUTE THUẦN TÚY, KHÔNG HIỆN CHỮ
     catEl.innerHTML = `
       <div class="cat-avatar-wrap">
@@ -273,7 +318,7 @@
       if (navigator.vibrate) navigator.vibrate(35);
     };
 
-    catEl.addEventListener('pointerdown', onCatTap);
+    catEl.addEventListener("pointerdown", onCatTap);
     catsContainer.appendChild(catEl);
 
     // Tự xoá sau 6.5s
@@ -283,9 +328,9 @@
   }
 
   function createHeartPop(parent) {
-    const heart = document.createElement('div');
-    heart.className = 'cat-heart-pop';
-    const hearts = ['💖', '💕', '🐾', '✨', '😻', '🌸'];
+    const heart = document.createElement("div");
+    heart.className = "cat-heart-pop";
+    const hearts = ["💖", "💕", "🐾", "✨", "😻", "🌸"];
     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
     parent.appendChild(heart);
     setTimeout(() => heart.remove(), 1400);
@@ -310,7 +355,7 @@
 
     isHolding = true;
     holdStartTime = performance.now();
-    touchArea.classList.add('holding');
+    touchArea.classList.add("holding");
 
     if (navigator.vibrate) navigator.vibrate([40, 20, 40]);
     lastVibrateTick = holdStartTime;
@@ -334,10 +379,12 @@
       lastVibrateTick = now;
     }
 
-    const remainingSec = Math.max(0, (HOLD_DURATION - elapsed) / 1000).toFixed(1);
+    const remainingSec = Math.max(0, (HOLD_DURATION - elapsed) / 1000).toFixed(
+      1,
+    );
     if (progress < 1) {
       timerCountdown.textContent = `Dí yên ngón tay: ${remainingSec}s ✨`;
-      touchPrompt.textContent = 'Đang cảm nhận năng lượng... 💖';
+      touchPrompt.textContent = "Đang cảm nhận năng lượng... 💖";
       holdAnimFrame = requestAnimationFrame(checkHoldProgress);
     } else {
       // ĐÃ ĐỦ 2 GIÂY: MỞ RA ĐIỀU BẤT NGỜ!
@@ -349,35 +396,39 @@
     if (hasUnlocked) return;
     if (isHolding) {
       isHolding = false;
-      touchArea.classList.remove('holding');
+      touchArea.classList.remove("holding");
       cancelAnimationFrame(holdAnimFrame);
 
       progressFill.style.strokeDashoffset = RING_CIRCUMFERENCE;
-      timerCountdown.textContent = 'Giữ yên trong 2 giây nhé';
-      touchPrompt.textContent = 'Hãy đặt tay cậu vào đây';
+      timerCountdown.textContent = "Giữ yên trong 2 giây nhé";
+      touchPrompt.textContent = "Hãy đặt tay cậu vào đây";
 
       const elapsed = performance.now() - holdStartTime;
       if (elapsed < HOLD_DURATION) {
-        timerCountdown.style.color = '#ff1744';
-        timerCountdown.textContent = 'Hãy giữ đủ 2 giây để mở quà nhé! 💖';
+        timerCountdown.style.color = "#ff1744";
+        timerCountdown.textContent = "Hãy giữ đủ 2 giây để mở quà nhé! 💖";
         setTimeout(() => {
-          timerCountdown.style.color = '';
-          timerCountdown.textContent = 'Giữ yên trong 2 giây nhé';
+          timerCountdown.style.color = "";
+          timerCountdown.textContent = "Giữ yên trong 2 giây nhé";
         }, 1500);
       }
     }
   }
 
-  touchArea.addEventListener('touchstart', startHold, { passive: false });
-  touchArea.addEventListener('touchmove', (e) => {
-    if (isHolding && e.cancelable) e.preventDefault();
-  }, { passive: false });
-  touchArea.addEventListener('touchend', endHold);
-  touchArea.addEventListener('touchcancel', endHold);
+  touchArea.addEventListener("touchstart", startHold, { passive: false });
+  touchArea.addEventListener(
+    "touchmove",
+    (e) => {
+      if (isHolding && e.cancelable) e.preventDefault();
+    },
+    { passive: false },
+  );
+  touchArea.addEventListener("touchend", endHold);
+  touchArea.addEventListener("touchcancel", endHold);
 
-  touchArea.addEventListener('mousedown', startHold);
-  touchArea.addEventListener('mouseup', endHold);
-  touchArea.addEventListener('mouseleave', endHold);
+  touchArea.addEventListener("mousedown", startHold);
+  touchArea.addEventListener("mouseup", endHold);
+  touchArea.addEventListener("mouseleave", endHold);
 
   // ============================================================
   // 5. HIỆU ỨNG MỞ QUÀ BÙNG NỔ (REVEAL MAGIC)
@@ -385,14 +436,18 @@
   function triggerUnlockMagic() {
     hasUnlocked = true;
     isHolding = false;
-    touchArea.classList.remove('holding');
+    notifyTelegram(
+      "🎁 Có người đã dí tay 2 giây và mở quà",
+      "hpbdc_tg_unlocked",
+    );
+    touchArea.classList.remove("holding");
     progressFill.style.strokeDashoffset = 0;
 
     if (navigator.vibrate) navigator.vibrate([80, 40, 120, 40, 200]);
 
     // Chớp sáng màn hình
-    const flash = document.createElement('div');
-    flash.className = 'screen-flash flash-active';
+    const flash = document.createElement("div");
+    flash.className = "screen-flash flash-active";
     document.body.appendChild(flash);
 
     // Nổ loạt pháo hoa lớn
@@ -401,7 +456,7 @@
         launchFirework(
           Math.random() * screenWidth,
           Math.random() * (screenHeight * 0.6) + 40,
-          75
+          75,
         );
       }, i * 180);
     }
@@ -411,26 +466,26 @@
 
     // Chuyển màn hình từ Màn 1 sang Màn 2
     setTimeout(() => {
-      introScreen.classList.remove('active');
-      introScreen.classList.add('hidden');
+      introScreen.classList.remove("active");
+      introScreen.classList.add("hidden");
 
       fillLetterContent();
-      giftScreen.classList.remove('hidden');
-      giftScreen.classList.add('active');
+      giftScreen.classList.remove("hidden");
+      giftScreen.classList.add("active");
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
       // Nến pháo hoa bắn tia lửa rực rỡ
       startSparklerCandle();
 
       // Mở phong bì thư
       setTimeout(() => {
-        const envelope = document.getElementById('envelope');
-        if (envelope) envelope.classList.add('opened');
+        const envelope = document.getElementById("envelope");
+        if (envelope) envelope.classList.add("opened");
       }, 400);
 
       // Tắt flash
-      flash.classList.remove('flash-active');
+      flash.classList.remove("flash-active");
       setTimeout(() => flash.remove(), 600);
     }, 450);
   }
@@ -439,7 +494,14 @@
   // 6. NẾN PHÁO HOA BÁNH GATO BẮN TIA LỬA RỰC RỠ LIÊN TỤC
   // ============================================================
   const sparklerParticles = [];
-  const sparkColors = ['#ffffff', '#fff7b2', '#ffe066', '#ffd166', '#ff9f1c', '#ff3838'];
+  const sparkColors = [
+    "#ffffff",
+    "#fff7b2",
+    "#ffe066",
+    "#ffd166",
+    "#ff9f1c",
+    "#ff3838",
+  ];
 
   class SparklerParticle {
     constructor(x, y) {
@@ -487,7 +549,7 @@
       sparkCtx.clearRect(0, 0, sparklerCanvas.width, sparklerCanvas.height);
 
       if (isCandleLit && sparkCore) {
-        const cakeStage = document.getElementById('cakeStage');
+        const cakeStage = document.getElementById("cakeStage");
         if (cakeStage) {
           const stageRect = cakeStage.getBoundingClientRect();
           const coreRect = sparkCore.getBoundingClientRect();
@@ -523,49 +585,53 @@
     bgMusic.currentTime = 0;
     const playPromise = bgMusic.play();
     if (playPromise !== undefined) {
-      playPromise.then(() => {
-        console.log('Đang phát toidaidot (GREY D) từ câu: Ngày hôm ấy đã quá ngốc...');
-      }).catch(err => {
-        console.warn('Lỗi autoplay audio, kích hoạt fallback:', err);
-        startWebAudioBirthdayTune();
-      });
+      playPromise
+        .then(() => {
+          console.log(
+            "Đang phát toidaidot (GREY D) từ câu: Ngày hôm ấy đã quá ngốc...",
+          );
+        })
+        .catch((err) => {
+          console.warn("Lỗi autoplay audio, kích hoạt fallback:", err);
+          startWebAudioBirthdayTune();
+        });
     }
   }
 
   // Giai điệu Happy Birthday êm dịu dự phòng (Web Audio API)
   const HAPPY_BIRTHDAY_NOTES = [
     { note: 261.63, dur: 0.35 }, // C4
-    { note: 261.63, dur: 0.2 },  // C4
-    { note: 293.66, dur: 0.5 },  // D4
-    { note: 261.63, dur: 0.5 },  // C4
-    { note: 349.23, dur: 0.5 },  // F4
-    { note: 329.63, dur: 0.9 },  // E4
-    { note: 0, dur: 0.2 },       // Nghỉ
+    { note: 261.63, dur: 0.2 }, // C4
+    { note: 293.66, dur: 0.5 }, // D4
+    { note: 261.63, dur: 0.5 }, // C4
+    { note: 349.23, dur: 0.5 }, // F4
+    { note: 329.63, dur: 0.9 }, // E4
+    { note: 0, dur: 0.2 }, // Nghỉ
 
     { note: 261.63, dur: 0.35 }, // C4
-    { note: 261.63, dur: 0.2 },  // C4
-    { note: 293.66, dur: 0.5 },  // D4
-    { note: 261.63, dur: 0.5 },  // C4
-    { note: 392.00, dur: 0.5 },  // G4
-    { note: 349.23, dur: 0.9 },  // F4
-    { note: 0, dur: 0.2 },       // Nghỉ
+    { note: 261.63, dur: 0.2 }, // C4
+    { note: 293.66, dur: 0.5 }, // D4
+    { note: 261.63, dur: 0.5 }, // C4
+    { note: 392.0, dur: 0.5 }, // G4
+    { note: 349.23, dur: 0.9 }, // F4
+    { note: 0, dur: 0.2 }, // Nghỉ
 
     { note: 261.63, dur: 0.35 }, // C4
-    { note: 261.63, dur: 0.2 },  // C4
-    { note: 523.25, dur: 0.5 },  // C5
-    { note: 440.00, dur: 0.5 },  // A4
-    { note: 349.23, dur: 0.5 },  // F4
-    { note: 329.63, dur: 0.5 },  // E4
-    { note: 293.66, dur: 0.8 },  // D4
-    { note: 0, dur: 0.2 },       // Nghỉ
+    { note: 261.63, dur: 0.2 }, // C4
+    { note: 523.25, dur: 0.5 }, // C5
+    { note: 440.0, dur: 0.5 }, // A4
+    { note: 349.23, dur: 0.5 }, // F4
+    { note: 329.63, dur: 0.5 }, // E4
+    { note: 293.66, dur: 0.8 }, // D4
+    { note: 0, dur: 0.2 }, // Nghỉ
 
     { note: 466.16, dur: 0.35 }, // Bb4
-    { note: 466.16, dur: 0.2 },  // Bb4
-    { note: 440.00, dur: 0.5 },  // A4
-    { note: 349.23, dur: 0.5 },  // F4
-    { note: 392.00, dur: 0.5 },  // G4
-    { note: 349.23, dur: 1.1 },  // F4
-    { note: 0, dur: 0.8 }        // Nghỉ lặp lại
+    { note: 466.16, dur: 0.2 }, // Bb4
+    { note: 440.0, dur: 0.5 }, // A4
+    { note: 349.23, dur: 0.5 }, // F4
+    { note: 392.0, dur: 0.5 }, // G4
+    { note: 349.23, dur: 1.1 }, // F4
+    { note: 0, dur: 0.8 }, // Nghỉ lặp lại
   ];
 
   function startWebAudioBirthdayTune() {
@@ -586,7 +652,7 @@
       }
       playNextNote();
     } catch (e) {
-      console.warn('Web Audio error:', e);
+      console.warn("Web Audio error:", e);
     }
   }
 
@@ -595,12 +661,18 @@
     const osc = webAudioCtx.createOscillator();
     const gain = webAudioCtx.createGain();
 
-    osc.type = 'sine';
+    osc.type = "sine";
     osc.frequency.setValueAtTime(freq, webAudioCtx.currentTime);
 
     gain.gain.setValueAtTime(0.01, webAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.22, webAudioCtx.currentTime + 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.001, webAudioCtx.currentTime + duration);
+    gain.gain.exponentialRampToValueAtTime(
+      0.22,
+      webAudioCtx.currentTime + 0.05,
+    );
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      webAudioCtx.currentTime + duration,
+    );
 
     osc.connect(gain);
     gain.connect(webAudioCtx.destination);
@@ -609,4 +681,5 @@
     osc.stop(webAudioCtx.currentTime + duration);
   }
 
+  notifyTelegram("🎂 Có người vừa mở link quà sinh nhật", "hpbdc_tg_opened");
 })();

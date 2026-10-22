@@ -30,6 +30,27 @@
   // Chu vi vòng tròn tiến trình (2 * PI * 72 ≈ 452.389)
   const RING_CIRCUMFERENCE = 452.389;
 
+  const LETTER_PARAGRAPHS = [
+    'Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, xinh đẹp, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.',
+    'Sau thời gian chia tay, tớ đã nghiêm túc nhìn lại quãng thời gian mình bên nhau. Tớ nhận ra những vấn đề giữa 2 người chưa thực sự được giải quyết, và tớ đã không hiểu hết được những tổn thương, đau đớn và sự kiệt sức mà cậu đã trải qua. Tớ bỏ qua cảm xúc của cậu, nóng nảy, vội vàng, thiếu kiên nhẫn, tạo ra áp lực trong mối quan hệ. Tớ cũng hiểu rằng có những lời xin lỗi hay lời hứa không thể lập tức lấy lại niềm tin đã mất.',
+    'Tớ cũng đang cố gắng từng ngày, chăm chỉ hơn trong học tập, tập gym, ăn uống điều độ hơn và học cách yêu thương, trân trọng những người xung quanh, biết lắng nghe, biết tôn trọng và quan tâm hơn. Tớ cũng học cách kiểm soát cơn giận, bình tĩnh hơn khi có mâu thuẫn và giải quyết vấn đề một cách trưởng thành thay vì để cảm xúc làm tổn thương những người mình yêu thương.',
+    'Tớ rất trân trọng những điều ở cậu, từ những sở thích, mindset luôn muốn đi lên và sự hiểu chuyện mà cậu đã dành cho tớ.',
+    'Thật lòng thì tớ vẫn còn tình cảm với cậu, và nếu một ngày nào đó cậu cũng muốn cho hai đứa một cơ hội, tớ vẫn mong mình có thể bắt đầu lại bằng một cách tốt đẹp hơn, bằng hành động chứ không chỉ bằng lời nói. Nhưng tớ hiểu hiện tại cậu muốn có không gian riêng, và tớ tôn trọng điều đó.',
+    'Hôm nay tớ chỉ mong cậu có một sinh nhật thật vui vẻ, được làm những điều mình thích và ở bên những người khiến cậu cảm thấy bình yên.',
+    'Chúc mừng sinh nhật cậu nhé ✨',
+  ];
+
+  function fillLetterContent() {
+    const letterContent = document.getElementById('letterContent');
+    if (!letterContent || letterContent.childElementCount > 0) return;
+
+    LETTER_PARAGRAPHS.forEach((text) => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      letterContent.appendChild(paragraph);
+    });
+  }
+
   // --- Trạng thái hệ thống ---
   let isHolding = false;
   let holdStartTime = 0;
@@ -393,6 +414,7 @@
       introScreen.classList.remove('active');
       introScreen.classList.add('hidden');
 
+      fillLetterContent();
       giftScreen.classList.remove('hidden');
       giftScreen.classList.add('active');
 

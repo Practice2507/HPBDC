@@ -1,0 +1,879 @@
+/* ============================================================
+   CHÚC MỪNG SINH NHẬT - STYLESHEET TINH TẾ, NGỌT NGÀO & LÃNG MẠN
+   Tone màu: Hồng pastel, Rose Gold, Ánh sáng lấp lánh
+   Tối ưu 100% cho màn hình điện thoại (Dí tay 2s, hoạt ảnh mượt)
+   ============================================================ */
+
+:root {
+  --primary-pink: #ff4071;
+  --hot-pink: #ff1e56;
+  --soft-pink: #ff758f;
+  --light-pink: #ffd3e2;
+  --bg-blush: #fff0f3;
+  --cream-white: #fffdfd;
+  --gold-spark: #ffd166;
+  --gold-accent: #f4a261;
+  --deep-text: #4a1d2e;
+  --sub-text: #7d4458;
+  --glass-bg: rgba(255, 255, 255, 0.84);
+  --glass-border: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 16px 40px rgba(230, 60, 110, 0.22);
+  --font-script: 'Dancing Script', cursive;
+  --font-heading: 'Pacifico', cursive;
+  --font-body: 'Quicksand', 'Nunito', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  color: var(--deep-text);
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 45%, #ffd1dc 75%, #ffb8cc 100%);
+  background-attachment: fixed;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* ================= 1. CANVAS PHÁO HOA NỀN ================= */
+#fireworksCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ================= 2. BÓNG BAY LƠ LỬNG ================= */
+.balloons-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -160px;
+  width: 58px;
+  height: 72px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  box-shadow: inset -6px -6px 12px rgba(0,0,0,0.12), inset 8px 8px 14px rgba(255,255,255,0.7), 0 10px 20px rgba(255, 80, 120, 0.25);
+  animation: floatUp 13s linear infinite;
+  opacity: 0.9;
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  height: 28px;
+  background: rgba(180, 90, 120, 0.6);
+}
+
+.balloon::before {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 6px;
+  background: inherit;
+  border-radius: 2px;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-60vh) rotate(12deg) translateX(25px);
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-135vh) rotate(-14deg) translateX(-30px);
+    opacity: 0;
+  }
+}
+
+/* ================= 3. ẢNH MÈO NỮ CUTE NỔI LÊN ================= */
+.cats-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.floating-cat {
+  position: absolute;
+  width: 82px;
+  height: 82px;
+  pointer-events: auto;
+  cursor: pointer;
+  animation: catFloatPop 6.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-cat:active, .floating-cat:hover {
+  transform: scale(1.22) rotate(-8deg);
+}
+
+.cat-avatar-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 3.5px;
+  background: linear-gradient(135deg, #ffffff, #ff85a2, #ffd166);
+  box-shadow: 0 8px 24px rgba(255, 60, 110, 0.38);
+  animation: catGlow 2s ease-in-out infinite alternate;
+}
+
+.cat-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: block;
+}
+
+.cat-heart-pop {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  pointer-events: none;
+  animation: heartFly 1.4s ease-out forwards;
+}
+
+@keyframes catGlow {
+  0% { filter: drop-shadow(0 4px 10px rgba(255, 60, 110, 0.3)); }
+  100% { filter: drop-shadow(0 8px 20px rgba(255, 20, 80, 0.6)); }
+}
+
+@keyframes heartFly {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); }
+  35% { opacity: 1; transform: translate(-50%, -22px) scale(1.25); }
+  100% { opacity: 0; transform: translate(-50%, -55px) scale(0.8); }
+}
+
+@keyframes catFloatPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) translateY(50px) rotate(-18deg);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(0deg);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.02) translateY(-30px) rotate(6deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-70px) rotate(-12deg);
+  }
+}
+
+/* ================= 4. MÀN HÌNH CHUYỂN ĐỔI ================= */
+.screen-view {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+  z-index: 10;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.screen-view.hidden {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.screen-view.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ================= 5. MÀN HÌNH 1: DÍ TAY VÀO MÀN HÌNH 2 GIÂY ================= */
+.intro-glass-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 2px solid var(--glass-border);
+  border-radius: 36px;
+  padding: 38px 22px 34px;
+  text-align: center;
+  box-shadow: var(--glass-shadow);
+  animation: cardEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sparkle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 64, 113, 0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: #c92a58;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+}
+
+.main-title {
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  color: #ff1e56;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.95), 0 4px 14px rgba(255, 30, 86, 0.3);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--sub-text);
+  font-weight: 600;
+  margin-bottom: 24px;
+  line-height: 1.45;
+}
+
+/* KHU VỰC DÍ TAY */
+.touch-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 20px;
+}
+
+.touch-area {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pulse-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 64, 113, 0.55);
+  pointer-events: none;
+  animation: pulseRipple 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.pulse-2 {
+  animation-delay: 0.8s;
+}
+
+.pulse-3 {
+  animation-delay: 1.6s;
+}
+
+@keyframes pulseRipple {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.progress-ring {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(255, 120, 160, 0.25);
+  stroke-width: 9;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: #ff1e56;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 452.389;
+  stroke-dashoffset: 452.389;
+  transition: stroke-dashoffset 0.05s linear;
+  filter: drop-shadow(0 0 10px rgba(255, 30, 86, 0.7));
+}
+
+.finger-sensor {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 30%, #ffd6e2 68%, #ff9ebb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 28px rgba(255, 40, 95, 0.35), inset 0 2px 6px rgba(255,255,255,0.9);
+  border: 3.5px solid #ffffff;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+.fingerprint-svg {
+  width: 72px;
+  height: 72px;
+  color: #ff3366;
+  transition: all 0.3s ease;
+}
+
+.sensor-hand-icon {
+  position: absolute;
+  font-size: 32px;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: all 0.3s ease;
+}
+
+.sensor-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 30, 86, 0.5) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.touch-area.holding .finger-sensor {
+  transform: scale(0.9);
+  box-shadow: 0 0 40px rgba(255, 20, 80, 0.85), inset 0 0 18px rgba(255, 80, 130, 0.6);
+}
+
+.touch-area.holding .fingerprint-svg {
+  color: #ff0044;
+  filter: drop-shadow(0 0 10px #ff0044);
+  animation: sensorVibrate 0.08s infinite alternate;
+}
+
+.touch-area.holding .sensor-glow {
+  opacity: 1;
+}
+
+@keyframes sensorVibrate {
+  0% { transform: scale(1.02) rotate(-1deg); }
+  100% { transform: scale(0.98) rotate(1deg); }
+}
+
+.hold-instruction {
+  margin-top: 22px;
+}
+
+.touch-prompt-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #c9184a;
+  letter-spacing: 0.4px;
+  animation: promptGlow 1.8s ease-in-out infinite;
+}
+
+@keyframes promptGlow {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; color: #ff0044; text-shadow: 0 0 12px rgba(255,0,68,0.3); }
+}
+
+.timer-countdown {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sub-text);
+  margin-top: 6px;
+  transition: color 0.3s ease;
+}
+
+.intro-footer-tip {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(255, 105, 140, 0.3);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sub-text);
+}
+
+/* ================= 6. MÀN HÌNH 2: BỨC THƯ & BÁNH GATO NẾN PHÁO ================= */
+.gift-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.congrats-banner {
+  text-align: center;
+  animation: bannerSlideIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bannerSlideIn {
+  0% { opacity: 0; transform: translateY(-35px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.congrats-title {
+  font-family: var(--font-heading);
+  font-size: 2.3rem;
+  color: #ff1e56;
+  text-shadow: 2px 2px 0 #fff, 0 4px 16px rgba(255, 30, 86, 0.35);
+  margin-bottom: 6px;
+}
+
+.congrats-subtitle {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #8a2a48;
+}
+
+/* Lưới hiển thị 2 cột: Bức thư & Bánh kem */
+.gift-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  width: 100%;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .gift-content-grid {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 32px;
+  }
+}
+
+/* BỨC THƯ SINH NHẬT - ĐỌC TRỰC TIẾP DỄ DÀNG */
+.letter-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.envelope-wrapper {
+  width: 100%;
+  max-width: 460px;
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  background: #fdf8f4;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(180, 45, 85, 0.24), 0 2px 8px rgba(0,0,0,0.06);
+  border: 1.5px solid rgba(255, 230, 238, 0.95);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.envelope-flap {
+  height: 16px;
+  background: linear-gradient(to right, #ffb3c6, #ff758f, #ffb3c6);
+  border-bottom: 2px solid #ff4071;
+}
+
+.letter-paper {
+  position: relative;
+  padding: 32px 26px;
+  background: #fffdfb;
+  background-image: radial-gradient(#f7d8e0 0.85px, transparent 0.85px);
+  background-size: 16px 16px;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: letterSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes letterSlideUp {
+  0% { opacity: 0; transform: translateY(35px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.letter-stamp {
+  align-self: flex-end;
+  background: #fff0f3;
+  border: 1.5px dashed #ff4071;
+  color: #ff1e56;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transform: rotate(4deg);
+}
+
+.letter-header {
+  margin-top: 10px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #ffd1dc;
+  padding-bottom: 10px;
+}
+
+.letter-header h3 {
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  color: #c9184a;
+  line-height: 1.25;
+}
+
+.letter-date {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #a84a65;
+}
+
+.letter-body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #4a2835;
+  font-weight: 500;
+}
+
+.letter-body p {
+  margin-bottom: 14px;
+}
+
+.letter-signature {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px dashed #ffd1dc;
+  font-family: var(--font-script);
+  font-size: 1.65rem;
+  color: #c9184a;
+  text-align: right;
+  line-height: 1.35;
+}
+
+.letter-signature strong {
+  font-size: 1.35rem;
+  color: #ff1e56;
+}
+
+/* BÁNH GATO & NẾN PHÁO ĐANG CHÁY */
+.cake-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cake-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 26px 20px 30px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cake-card-header {
+  margin-bottom: 12px;
+}
+
+.cake-badge {
+  background: linear-gradient(135deg, #fff0f3, #ffd3dd);
+  border: 1px solid #ff9eb5;
+  color: #c9184a;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 15px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(255, 80, 120, 0.16);
+}
+
+.cake-stage {
+  position: relative;
+  width: 100%;
+  height: 330px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Canvas nến pháo hoa bắn tia lửa */
+#sparklerCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Bánh sinh nhật 3 tầng */
+.cake-3d {
+  position: relative;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+}
+
+.sparkler-holder {
+  position: relative;
+  width: 14px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: -10px;
+  z-index: 12;
+}
+
+.sparkler-stick {
+  width: 6px;
+  height: 70px;
+  background: repeating-linear-gradient(45deg, #d4af37, #d4af37 6px, #fff 6px, #fff 12px);
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.spark-core {
+  position: absolute;
+  top: -14px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spark-core.active .glow-ember {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 20%, #ffe066 50%, rgba(255, 80, 0, 0.5) 80%, transparent 100%);
+  filter: drop-shadow(0 0 18px #ffcc00);
+  animation: emberFlicker 0.08s infinite alternate;
+}
+
+.spark-core.active .flame-core {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 12px #ffea00, 0 0 22px #ff3300;
+}
+
+@keyframes emberFlicker {
+  0% { transform: scale(0.9) rotate(0deg); opacity: 0.9; }
+  100% { transform: scale(1.25) rotate(45deg); opacity: 1; }
+}
+
+.cake-toppings {
+  position: relative;
+  width: 190px;
+  height: 35px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  margin-bottom: -8px;
+  z-index: 8;
+}
+
+.strawberry {
+  font-size: 26px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+  animation: gentleBob 3s ease-in-out infinite alternate;
+}
+
+.strawberry.s-2 { animation-delay: 1s; font-size: 24px; }
+.strawberry.s-3 { animation-delay: 2s; }
+
+@keyframes gentleBob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+.cream-drop {
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: inset -2px -2px 4px rgba(255, 182, 193, 0.5), 0 3px 6px rgba(0,0,0,0.08);
+}
+
+.cake-layer {
+  position: relative;
+  border-radius: 16px;
+  box-shadow: inset 0 4px 6px rgba(255,255,255,0.7), 0 8px 18px rgba(180, 50, 90, 0.25);
+}
+
+.layer-top {
+  width: 200px;
+  height: 75px;
+  background: linear-gradient(to bottom, #ff9eb5 0%, #ff7597 100%);
+  border: 3px solid #fff;
+  z-index: 6;
+}
+
+.layer-cream-drips {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.drip {
+  width: 16px;
+  height: 22px;
+  background: #ffffff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 3px 5px rgba(255, 105, 140, 0.2);
+}
+
+.drip:nth-child(even) {
+  height: 28px;
+}
+
+.layer-bottom {
+  width: 250px;
+  height: 90px;
+  background: linear-gradient(to bottom, #ffb3c6 0%, #ff8da7 100%);
+  border: 4px solid #fff;
+  margin-top: -6px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.layer-decoration {
+  position: absolute;
+  top: 8px;
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.pearl {
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.cake-tag {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: #ff3366;
+  box-shadow: 0 3px 8px rgba(255, 50, 100, 0.25);
+  margin-top: 16px;
+}
+
+.cake-plate {
+  width: 280px;
+  height: 18px;
+  background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 60%, #dedede 100%);
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(100, 30, 50, 0.25);
+  margin-top: -6px;
+  z-index: 4;
+}
+
+.gift-footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #8a3350;
+}
+
+/* ================= 7. HIỆU ỨNG CHỚP SÁNG MA THUẬT KHI MỞ ================= */
+.screen-flash {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.screen-flash.flash-active {
+  opacity: 0.95;
+}

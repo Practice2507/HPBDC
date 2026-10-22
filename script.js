@@ -32,12 +32,12 @@
 
   const LETTER_PARAGRAPHS = [
     "Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, xinh đẹp, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.",
-    "Sau thời gian chia tay, tớ đã nghiêm túc nhìn lại quãng thời gian mình bên nhau. Tớ nhận ra những vấn đề giữa 2 người chưa thực sự được giải quyết, và tớ đã không hiểu hết được những tổn thương, đau đớn và sự kiệt sức mà cậu đã trải qua. Tớ bỏ qua cảm xúc của cậu, nóng nảy, vội vàng, thiếu kiên nhẫn, tạo ra áp lực trong mối quan hệ. Tớ cũng hiểu rằng có những lời xin lỗi hay lời hứa không thể lập tức lấy lại niềm tin đã mất.",
-    "Tớ cũng đang cố gắng từng ngày, chăm chỉ hơn trong học tập, tập gym, ăn uống điều độ hơn và học cách yêu thương, trân trọng những người xung quanh, biết lắng nghe, biết tôn trọng và quan tâm hơn. Tớ cũng học cách kiểm soát cơn giận, bình tĩnh hơn khi có mâu thuẫn và giải quyết vấn đề một cách trưởng thành thay vì để cảm xúc làm tổn thương những người mình yêu thương.",
-    "Tớ rất trân trọng những điều ở cậu, từ những sở thích, mindset luôn muốn đi lên và sự hiểu chuyện mà cậu đã dành cho tớ.",
-    "Thật lòng thì tớ vẫn còn tình cảm với cậu, và nếu một ngày nào đó cậu cũng muốn cho hai đứa một cơ hội, tớ vẫn mong mình có thể bắt đầu lại bằng một cách tốt đẹp hơn, bằng hành động chứ không chỉ bằng lời nói. Nhưng tớ hiểu hiện tại cậu muốn có không gian riêng, và tớ tôn trọng điều đó.",
-    "Hôm nay tớ chỉ mong cậu có một sinh nhật thật vui vẻ, được làm những điều mình thích và ở bên những người khiến cậu cảm thấy bình yên.",
+    "Sau thời gian qua, tớ đã nghiêm túc nhìn lại và tớ muốn xin lỗi cậu cho đàng hoàng. Tớ không kiểm soát được cảm xúc: khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng. Những lần cãi nhau trước tớ không giải quyết nên để mọi thứ lặp lại khiến cậu kiệt sức, bỏ qua cảm xúc và không chịu lắng nghe cậu. Cậu không đáng để chịu như vậy.",
+    "Tớ biết lời xin lỗi không lấy lại được niềm tin ngay nên tớ không viết để mong cậu tha thứ. Tớ học cách bình tĩnh, biết lắng nghe, biết quan tâm hơn.",
+    "Nếu một ngày nào đó cậu muốn nghe một lời giải thích đàng hoàng, hoặc cần một cuộc nói chuyện bình tĩnh, tớ sẵn sàng để bù đắp bằng hành động vào thời điểm cậu thấy thoải mái.",
+    "Tớ trân trọng sở thích, tính cách và sự hiểu chuyện của cậu. Cảm ơn cậu vì đã ở bên tớ những lúc tớ bết bát, áp lực và khó khăn nhất. Tớ biết điều đó không dễ, và tớ sẽ luôn nhớ .",
     "Chúc mừng sinh nhật cậu nhé ✨",
+    ,
   ];
 
   function fillLetterContent() {

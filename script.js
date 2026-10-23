@@ -51,13 +51,14 @@
   // 👉 2. NỘI DUNG BỨC THƯ TỰ GHI (Hiện khi bấm nút dưới thư chúc):
   // ============================================================
   const STORY_PARAGRAPHS = [
-    "Sau thời gian qua, tớ đã nghiêm túc nhìn lại và tớ muốn xin lỗi cậu cho đàng hoàng.",
-    "Tớ không kiểm soát được cảm xúc: khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng.",
-    "Những lần cãi nhau trước, tớ không giải quyết nên mọi thứ cứ lặp lại, khiến cậu kiệt sức. Tớ cũng đã bỏ qua cảm xúc và không chịu lắng nghe cậu. Tớ hứa nhưng chỉ nói mà không làm được nên cậu thấy mệt và thất vọng.",
+    "Sau thời gian qua, tớ đã nghiêm túc nhìn lại.",
+    "Tớ biết cậu đã cho tớ nhiều cơ hội, và tớ đã không trân trọng chúng. Mỗi lần xin lỗi rồi lại lặp lại, tớ làm cậu mất dần niềm tin. Tớ hiểu vì sao cậu nghĩ tớ khó thay đổi.",
+    "Khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng.",
+    "Những lần cãi nhau trước, tớ không giải quyết nên mọi thứ cứ lặp lại, khiến cậu kiệt sức. Tớ cũng đã bỏ qua cảm xúc và không chịu lắng nghe cậu.",
     "Tớ xin lỗi vì sự thiếu chín chắn của mình. Tớ biết lời xin lỗi không lập tức lấy lại được niềm tin đã mất. Tớ đang học cách bình tĩnh, biết lắng nghe, biết quan tâm hơn và chịu trách nhiệm cho lời nói của mình.",
     "Một ngày nào đó nếu cậu muốn nghe một lời giải thích đàng hoàng, tớ sẵn sàng giải thích và bù đắp bằng hành động.",
     "Tớ trân trọng sở thích, tính cách và sự hiểu chuyện của cậu. Cảm ơn cậu vì đã ở bên tớ những lúc tớ bết bát, áp lực và khó khăn nhất. Tớ biết điều đó không dễ, và tớ sẽ luôn nhớ.",
-    "Chúc mừng sinh nhật cậu nhé ✨",
+    "Một ngày nào đó nếu tớ thật sự có cơ hội, tớ nhất định sẽ nắm tay cậu thật chặt."
   ];
 
   function fillWishLetterContent() {
@@ -548,10 +549,10 @@
       flash.classList.remove("flash-active");
       setTimeout(() => flash.remove(), 600);
 
-      // 👉 SAU KHI DÍ 2S XONG, CHỜ ĐÚNG 4 GIÂY SAU HIỆN NÚT BẤM Ở DƯỚI THƯ CHÚC
+      // 👉 SAU KHI DÍ 2S XONG, CHỜ KHOẢNG 7 GIÂY SAU HIỆN NÚT BẤM Ở DƯỚI THƯ CHÚC
       setTimeout(() => {
         showLetterRevealButton();
-      }, 4000);
+      }, 7000);
     }, 450);
   }
 
@@ -812,7 +813,7 @@
   setupChocolateInteractions();
 
   // ============================================================
-  // 9. NÚT HIỆN SAU 4 GIÂY: BẤM ĐỂ MỞ BỨC THƯ & PHÁT TIẾNG NHẠC
+  // 9. NÚT HIỆN SAU 7 GIÂY: BẤM ĐỂ MỞ BỨC THƯ & PHÁT TIẾNG NHẠC
   // ============================================================
   function showLetterRevealButton() {
     if (!letterRevealBox) return;

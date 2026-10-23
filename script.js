@@ -52,13 +52,13 @@
   // ============================================================
   const STORY_PARAGRAPHS = [
     "Sau thời gian qua, tớ đã nghiêm túc nhìn lại.",
-    "Tớ biết cậu đã cho tớ nhiều cơ hội, và tớ đã không trân trọng chúng. Mỗi lần xin lỗi rồi lại lặp lại, tớ làm cậu mất dần niềm tin. Tớ hiểu vì sao cậu nghĩ tớ khó thay đổi.",
+    "Tớ biết cậu đã cho tớ nhiều cơ hội, và tớ đã không trân trọng chúng. Mỗi lần xin lỗi rồi lại lặp lại, tớ làm cậu mất dần niềm tin. Tớ hiểu vì sao cậu nghĩ tớ khó thay đổi, và tớ không trách cậu.",
     "Khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng.",
     "Những lần cãi nhau trước, tớ không giải quyết nên mọi thứ cứ lặp lại, khiến cậu kiệt sức. Tớ cũng đã bỏ qua cảm xúc và không chịu lắng nghe cậu.",
     "Tớ xin lỗi vì sự thiếu chín chắn của mình. Tớ biết lời xin lỗi không lập tức lấy lại được niềm tin đã mất. Tớ đang học cách bình tĩnh, biết lắng nghe, biết quan tâm hơn và chịu trách nhiệm cho lời nói của mình.",
     "Một ngày nào đó nếu cậu muốn nghe một lời giải thích đàng hoàng, tớ sẵn sàng giải thích và bù đắp bằng hành động.",
     "Tớ trân trọng sở thích, tính cách và sự hiểu chuyện của cậu. Cảm ơn cậu vì đã ở bên tớ những lúc tớ bết bát, áp lực và khó khăn nhất. Tớ biết điều đó không dễ, và tớ sẽ luôn nhớ.",
-    "Một ngày nào đó nếu tớ thật sự có cơ hội, tớ nhất định sẽ nắm tay cậu thật chặt."
+    "Một ngày nào đó nếu tớ thật sự có cơ hội, tớ nhất định sẽ nắm tay cậu thật chặt và không để cậu tuột khỏi tớ nữa!"
   ];
 
   function fillWishLetterContent() {

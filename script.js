@@ -497,20 +497,6 @@
       } catch (err) {}
     }
 
-    // Gửi thông báo an toàn, tuyệt đối không bao giờ làm gián đoạn hiệu ứng mở quà
-    try {
-      notifyTelegram(
-        "🎁 Có người đã dí tay 2 giây và mở quà",
-        "hpbdc_tg_unlocked",
-      );
-      if (typeof emailjs !== "undefined" && !sessionStorage.getItem("hpbdc_email_unlocked")) {
-        sessionStorage.setItem("hpbdc_email_unlocked", "1");
-        emailjs.send("service_gi70snv", "template_stkadco", {}).catch(() => {});
-      }
-    } catch (err) {
-      console.warn("Lỗi gửi thông báo mở quà:", err);
-    }
-
     // Chớp sáng màn hình
     const flash = document.createElement("div");
     flash.className = "screen-flash flash-active";

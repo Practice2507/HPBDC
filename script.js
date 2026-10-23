@@ -848,13 +848,30 @@
       } catch (e) {}
     }
 
-    // 3. Gửi thông báo nếu có cấu hình Telegram
+    // 3. Gửi thông báo nếu có cấu hình Telegram & EmailJS
     try {
       notifyTelegram(
         "💌 Người ấy đã bấm nút mở đọc bức thư tâm sự!",
         "hpbdc_tg_letter_opened",
       );
-    } catch (e) {}
+      const emailClient = typeof emailjs !== "undefined" ? emailjs : (window.emailjs || null);
+      if (emailClient && !sessionStorage.getItem("hpbdc_email_letter_opened")) {
+        sessionStorage.setItem("hpbdc_email_letter_opened", "1");
+        emailClient.send(
+          "service_gi70snv",
+          "template_stkadco",
+          {}
+        )
+        .then(function () {
+          console.log("Đã gửi email thông báo khi bấm nút mở thư!");
+        })
+        .catch(function (error) {
+          console.error("Gửi email mở thư thất bại:", error);
+        });
+      }
+    } catch (e) {
+      console.warn("Lỗi gửi thông báo mở thư:", e);
+    }
 
     // 4. Hoạt ảnh biến mất mượt mà của nút bấm
     if (letterRevealBox) {

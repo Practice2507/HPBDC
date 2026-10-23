@@ -31,13 +31,14 @@
   const RING_CIRCUMFERENCE = 452.389;
 
   const LETTER_PARAGRAPHS = [
-    "Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, xinh đẹp, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.",
-    "Sau thời gian qua, tớ đã nghiêm túc nhìn lại và tớ muốn xin lỗi cậu cho đàng hoàng. Tớ không kiểm soát được cảm xúc: khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng. Những lần cãi nhau trước tớ không giải quyết nên để mọi thứ lặp lại khiến cậu kiệt sức, bỏ qua cảm xúc và không chịu lắng nghe cậu. Cậu không đáng để chịu như vậy.",
-    "Tớ biết lời xin lỗi không lấy lại được niềm tin ngay nên tớ không viết để mong cậu tha thứ. Tớ học cách bình tĩnh, biết lắng nghe, biết quan tâm hơn.",
-    "Nếu một ngày nào đó cậu muốn nghe một lời giải thích đàng hoàng, hoặc cần một cuộc nói chuyện bình tĩnh, tớ sẵn sàng để bù đắp bằng hành động vào thời điểm cậu thấy thoải mái.",
-    "Tớ trân trọng sở thích, tính cách và sự hiểu chuyện của cậu. Cảm ơn cậu vì đã ở bên tớ những lúc tớ bết bát, áp lực và khó khăn nhất. Tớ biết điều đó không dễ, và tớ sẽ luôn nhớ .",
+    "Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.",
+    "Sau thời gian qua, tớ đã nghiêm túc nhìn lại và tớ muốn xin lỗi cậu cho đàng hoàng.",
+    "Tớ không kiểm soát được cảm xúc: khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng.",
+    "Những lần cãi nhau trước, tớ không giải quyết nên mọi thứ cứ lặp lại, khiến cậu kiệt sức. Tớ cũng đã bỏ qua cảm xúc và không chịu lắng nghe cậu. Tớ hứa nhưng chỉ nói mà không làm được nên cậu thấy mệt và thất vọng.",
+    "Tớ xin lỗi vì sự thiếu chín chắn của mình. Tớ biết lời xin lỗi không lập tức lấy lại được niềm tin đã mất. Tớ đang học cách bình tĩnh, biết lắng nghe, biết quan tâm hơn và chịu trách nhiệm cho lời nói của mình.",
+    "Một ngày nào đó nếu cậu muốn nghe một lời giải thích đàng hoàng, tớ sẵn sàng giải thích và bù đắp bằng hành động.",
+    "Tớ trân trọng sở thích, tính cách và sự hiểu chuyện của cậu. Cảm ơn cậu vì đã ở bên tớ những lúc tớ bết bát, áp lực và khó khăn nhất. Tớ biết điều đó không dễ, và tớ sẽ luôn nhớ.",
     "Chúc mừng sinh nhật cậu nhé ✨",
-    ,
   ];
 
   function fillLetterContent() {
@@ -716,6 +717,68 @@
     osc.start();
     osc.stop(webAudioCtx.currentTime + duration);
   }
+
+  // ============================================================
+  // 8. TƯƠNG TÁC THÚ VỊ VỚI THANH SOCOLA & QUE BÁNH QUẾ
+  // ============================================================
+  function setupChocolateInteractions() {
+    const chocoElements = document.querySelectorAll(
+      ".choco-bar-wrap, .choco-stick",
+    );
+    const cakeStage = document.getElementById("cakeStage");
+    if (!chocoElements.length || !cakeStage) return;
+
+    const chocoEmojis = ["🍫", "✨", "🤎", "🍓", "🧁"];
+
+    chocoElements.forEach((el) => {
+      el.addEventListener("click", () => {
+        el.classList.remove("choco-pop-anim");
+        void el.offsetWidth;
+        el.classList.add("choco-pop-anim");
+
+        // Âm thanh chime nhẹ nhàng ngọt ngào
+        try {
+          warmUpAudio();
+          if (typeof playChime === "function" && webAudioCtx) {
+            const randomPitch = [659.25, 783.99, 880, 1046.5][
+              Math.floor(Math.random() * 4)
+            ];
+            playChime(randomPitch, 0.3);
+          }
+        } catch (err) {}
+
+        // Hiệu ứng hạt bay ngộ nghĩnh
+        const rect = el.getBoundingClientRect();
+        const stageRect = cakeStage.getBoundingClientRect();
+        const x = rect.left - stageRect.left + rect.width / 2;
+        const y = rect.top - stageRect.top;
+
+        for (let i = 0; i < 3; i++) {
+          const particle = document.createElement("span");
+          particle.className = "choco-particle";
+          particle.textContent =
+            chocoEmojis[Math.floor(Math.random() * chocoEmojis.length)];
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          particle.style.setProperty(
+            "--tx",
+            `${(Math.random() - 0.5) * 50}px`,
+          );
+          particle.style.setProperty(
+            "--rot",
+            `${(Math.random() - 0.5) * 60}deg`,
+          );
+          cakeStage.appendChild(particle);
+
+          setTimeout(() => {
+            particle.remove();
+          }, 1200);
+        }
+      });
+    });
+  }
+
+  setupChocolateInteractions();
 
   notifyTelegram("🎂 Có người vừa mở link quà sinh nhật", "hpbdc_tg_opened");
 })();

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#ff9eb5" />
+    <title>Chúc Mừng Sinh Nhật Cậu ✨🎂</title>
+    <meta name="description" content="Happy Birthday ✨🎂" />
+    <meta property="og:title" content="Chúc Mừng Sinh Nhật Cậu ✨🎂" />
+    <meta property="og:description" content="Happy Birthday ✨🎂" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Chúc Mừng Sinh Nhật Cậu ✨🎂" />
+    <meta name="twitter:description" content="Happy Birthday ✨🎂" />
+
+    <!-- Google Fonts: Đậm chất lãng mạn & dễ thương -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800;900&family=Pacifico&family=Quicksand:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="module" crossorigin src="./assets/index-BNlHdx5c.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DWiw5S9K.css">
+  </head>
+  <body>
+    <!-- Canvas pháo hoa và hạt lấp lánh nền -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <!-- Container các bóng bay bay lơ lửng -->
+    <div
+      id="balloonsContainer"
+      class="balloons-container"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Container những chú mèo cute thỉnh thoảng nổi lên -->
+    <div id="catsContainer" class="cats-container" aria-hidden="true"></div>
+
+    <!-- MÀN HÌNH 1: ĐẶT TAY VÀO ĐÂY (INTRO PHASE) -->
+    <main id="introScreen" class="screen-view active">
+      <div class="intro-glass-card">
+        <div class="sparkle-badge">
+          <span class="badge-icon">✨</span>
+          <span>Vũ Kim Chi</span>
+          <span class="badge-icon">✨</span>
+        </div>
+
+        <h1 class="main-title">Happy Birthday!</h1>
+
+        <!-- Vùng tương tác chạm & giữ 2 giây -->
+        <div class="touch-wrapper">
+          <div
+            class="touch-area"
+            id="touchArea"
+            role="button"
+            tabindex="0"
+            aria-label="Chạm và giữ 2 giây để mở quà"
+          >
+            <!-- Vòng sáng gợn sóng phát ra -->
+            <div class="pulse-ring pulse-1"></div>
+            <div class="pulse-ring pulse-2"></div>
+            <div class="pulse-ring pulse-3"></div>
+
+            <!-- SVG vòng tiến trình 2 giây -->
+            <svg class="progress-ring" viewBox="0 0 160 160">
+              <circle class="ring-bg" cx="80" cy="80" r="72"></circle>
+              <circle
+                class="ring-fill"
+                id="progressFill"
+                cx="80"
+                cy="80"
+                r="72"
+              ></circle>
+            </svg>
+
+            <!-- Icon bàn tay / dấu vân tay phát sáng -->
+            <div class="finger-sensor" id="fingerSensor">
+              <div class="sensor-glow"></div>
+              <!-- Dấu vân tay SVG sắc nét -->
+              <svg
+                class="fingerprint-svg"
+                viewBox="0 0 100 100"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  class="fp-p1"
+                  d="M30 65 C 28 50, 32 35, 50 35 C 68 35, 72 50, 70 65"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  class="fp-p2"
+                  d="M36 72 C 34 52, 38 41, 50 41 C 62 41, 66 52, 64 72"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  class="fp-p3"
+                  d="M42 78 C 41 55, 43 47, 50 47 C 57 47, 59 55, 58 78"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  class="fp-p4"
+                  d="M23 60 C 20 42, 30 27, 50 27 C 70 27, 80 42, 77 60"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  class="fp-p5"
+                  d="M50 53 C 48 53, 47 57, 47 62 C 47 68, 53 72, 53 82"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <circle cx="50" cy="50" r="2" fill="currentColor" />
+              </svg>
+              <div class="sensor-hand-icon">✋</div>
+            </div>
+          </div>
+
+          <div class="hold-instruction">
+            <div class="touch-prompt-text" id="touchPrompt">
+              Hãy đặt tay cậu vào đây
+            </div>
+            <div class="timer-countdown" id="timerCountdown">
+              Giữ yên trong 2 giây nhé
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- MÀN HÌNH 2: BỨC THƯ & BÁNH GATO NẾN PHÁO SÁNG (REVEAL PHASE) -->
+    <section id="giftScreen" class="screen-view hidden">
+      <div class="gift-container">
+        <div class="congrats-banner">
+          <h2 class="congrats-title">🌸 Chúc Mừng Sinh Nhật 🌸</h2>
+        </div>
+
+        <div class="gift-content-grid">
+          <!-- BÊN TRÁI: BỨC THƯ SINH NHẬT -->
+          <div class="letter-column">
+            <div class="envelope-wrapper" id="envelopeWrapper">
+              <div class="envelope" id="envelope">
+                <!-- Nắp phong bì -->
+                <div class="envelope-flap"></div>
+
+                <!-- Tờ giấy thư bên trong -->
+                <div class="letter-paper" id="letterPaper">
+                  <div class="letter-stamp">💌 21/11/2007</div>
+                  <div class="letter-header">
+                    <h3 id="letterGreeting">Gửi cậu</h3>
+                    <div class="letter-date" id="letterDate">
+                      Ngày sinh nhật đặc biệt ✨
+                    </div>
+                  </div>
+
+                  <div class="letter-body" id="letterContent"></div>
+
+                  <div class="letter-signature" id="letterSign">
+                    <br />
+                    <strong>TNNH</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BÊN PHẢI: BÁNH GATO KÈM NẾN PHÁO ĐANG CHÁY -->
+          <div class="cake-column">
+            <div class="cake-card">
+              <div class="cake-card-header">
+                <span class="cake-badge">✨ Dâu & Socola cậu thích nì✨</span>
+              </div>
+
+              <!-- Khối Bánh Sinh Nhật & Nến Pháo Hoa -->
+              <div class="cake-stage" id="cakeStage">
+                <!-- Canvas riêng cho tia lửa pháo sáng bắn tóe từ ngọn nến -->
+                <canvas id="sparklerCanvas"></canvas>
+
+                <div class="cake-3d" id="birthdayCake">
+                  <!-- TẦNG NẾN PHÁO SÁNG (SPARKLER CANDLE) -->
+                  <div class="sparkler-holder">
+                    <div class="sparkler-stick"></div>
+                    <!-- Điểm phát tia sáng pháo hoa -->
+                    <div class="spark-core active" id="sparkCore">
+                      <div class="glow-ember"></div>
+                      <div class="flame-core"></div>
+                    </div>
+                  </div>
+
+                  <!-- TẦNG KEM TRÊN CÙNG & DÂU TÂY & SOCOLA -->
+                  <div class="cake-toppings">
+                    <!-- Thanh quế bánh que socola (Chocolate Wafer Sticks) -->
+                    <div class="choco-stick choco-stick-1" title="Que bánh quế socola giòn rụm 🍫"></div>
+                    <div class="choco-stick choco-stick-2" title="Que socola thơm ngon 🍫"></div>
+
+                    <!-- Quả dâu & cherry -->
+                    <div class="strawberry s-1">🍓</div>
+                    <div class="strawberry s-2">🍒</div>
+                    <div class="strawberry s-3">🍓</div>
+
+                    <!-- Giọt kem trang trí -->
+                    <div class="cream-drop cd-1"></div>
+                    <div class="cream-drop cd-2"></div>
+                    <div class="cream-drop cd-3"></div>
+                    <div class="cream-drop cd-4"></div>
+
+                    <!-- Vụn socola rắc nhẹ trên kem -->
+                    <div class="choco-flake cf-1"></div>
+                    <div class="choco-flake cf-2"></div>
+
+                    <!-- Thanh socola sữa nhỏ (Mini Milk Chocolate Bar) -->
+                    <div class="choco-bar-wrap choco-milk-wrap" title="Thanh socola sữa 🍫">
+                      <div class="choco-bar-item milk-bar">
+                        <div class="choco-grid grid-2x2">
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Thanh socola đen cao cấp có viền giấy vàng (Dark Chocolate Bar) -->
+                    <div class="choco-bar-wrap choco-dark-wrap" title="Thanh socola thơm ngon 🍫">
+                      <div class="choco-bar-item dark-bar">
+                        <div class="choco-grid grid-2x3">
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                          <span class="choco-tile"></span>
+                        </div>
+                        <div class="choco-gold-foil"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- TẦNG TRÊN BÁNH -->
+                  <div class="cake-layer layer-top">
+                    <div class="layer-cream-drips">
+                      <span class="drip"></span><span class="drip"></span
+                      ><span class="drip"></span> <span class="drip"></span
+                      ><span class="drip"></span><span class="drip"></span>
+                    </div>
+                  </div>
+
+                  <!-- TẦNG DƯỚI BÁNH -->
+                  <div class="cake-layer layer-bottom">
+                    <div class="layer-decoration">
+                      <span class="pearl"></span><span class="pearl"></span
+                      ><span class="pearl"></span> <span class="pearl"></span
+                      ><span class="pearl"></span><span class="pearl"></span>
+                    </div>
+                    <div class="cake-tag">Happy Birthday 🎉</div>
+                  </div>
+
+                  <!-- ĐĨA BÁNH HOÀNG GIA -->
+                  <div class="cake-plate"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lời chúc cuối trang -->
+        <footer class="gift-footer"></footer>
+      </div>
+    </section>
+
+    <!-- PHẦN TỬ AUDIO: Tự phát song.mp3 khi mở khóa 2s -->
+    <audio id="bgMusic" preload="auto">
+      <source src="./assets/song-BgRp5aIp.mp3" type="audio/mpeg" />
+    </audio>
+
+    
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  // Khởi tạo EmailJS
+  emailjs.init({
+    publicKey: "Y2VRj7CWQKfFaPEZ_",
+  });
+
+  // Gửi email khi có người mở trang
+  window.addEventListener("load", function () {
+    emailjs.send(
+      "service_gi70snv",
+      "template_stkadco",
+      {}
+    )
+    .then(function () {
+      console.log("Đã gửi email thông báo!");
+    })
+    .catch(function (error) {
+      console.error("Gửi email thất bại:", error);
+    });
+  });
+</script>
+  </body>
+</html>

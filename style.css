@@ -779,6 +779,286 @@ html, body {
   box-shadow: inset -2px -2px 4px rgba(255, 182, 193, 0.5), 0 3px 6px rgba(0,0,0,0.08);
 }
 
+/* ================= THANH SOCOLA & QUE BÁNH QUẾ TRANG TRÍ BÁNH ================= */
+
+/* 1. Que bánh quế socola cuộn xoắn bên trái */
+.choco-stick {
+  position: absolute;
+  border-radius: 6px;
+  z-index: 7;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 4px 6px rgba(45, 18, 8, 0.35));
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.choco-stick:hover {
+  transform: scale(1.08) translateY(-4px) !important;
+}
+
+.choco-stick-1 {
+  left: 14px;
+  bottom: 0px;
+  width: 9px;
+  height: 64px;
+  background: repeating-linear-gradient(
+    55deg,
+    #3b1708 0px,
+    #3b1708 7px,
+    #f3d2a2 7px,
+    #f3d2a2 9px,
+    #5c2810 9px,
+    #5c2810 14px
+  );
+  box-shadow: 
+    inset 1.5px 0 2px rgba(255, 255, 255, 0.35),
+    inset -1.5px 0 2px rgba(0, 0, 0, 0.65);
+  transform: rotate(-22deg);
+  animation: gentleBob 3.2s ease-in-out infinite alternate;
+  animation-delay: 1.2s;
+}
+
+.choco-stick-2 {
+  left: 26px;
+  bottom: -2px;
+  width: 8px;
+  height: 52px;
+  background: repeating-linear-gradient(
+    50deg,
+    #2c1004 0px,
+    #2c1004 6px,
+    #edd0a6 6px,
+    #edd0a6 8px,
+    #4e210b 8px,
+    #4e210b 13px
+  );
+  box-shadow: 
+    inset 1px 0 1.5px rgba(255, 255, 255, 0.35),
+    inset -1.5px 0 2px rgba(0, 0, 0, 0.7);
+  transform: rotate(-9deg);
+  animation: gentleBob 2.8s ease-in-out infinite alternate;
+  animation-delay: 0.6s;
+}
+
+/* 2. Vụn socola rắc trên kem tươi */
+.choco-flake {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #3a190b;
+  border-radius: 2px 50% 50% 2px;
+  transform: rotate(35deg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  z-index: 8;
+}
+
+.choco-flake.cf-1 {
+  left: 62px;
+  bottom: 14px;
+  transform: rotate(25deg);
+}
+
+.choco-flake.cf-2 {
+  right: 72px;
+  bottom: 12px;
+  width: 5px;
+  height: 5px;
+  transform: rotate(-40deg);
+}
+
+/* 3. Vỏ bọc bao ngoài thanh socola (Wrapper & Animation) */
+.choco-bar-wrap {
+  position: absolute;
+  z-index: 9;
+  transform-origin: bottom center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.choco-bar-wrap:hover {
+  transform: scale(1.1) translateY(-5px) !important;
+}
+
+/* Thanh socola đen lớn có giấy bạc vàng */
+.choco-dark-wrap {
+  right: 14px;
+  bottom: 1px;
+  transform: rotate(15deg);
+  filter: drop-shadow(0 6px 10px rgba(35, 12, 4, 0.4));
+  animation: gentleBob 3s ease-in-out infinite alternate;
+  animation-delay: 0.4s;
+}
+
+/* Thanh socola sữa nhỏ bên cạnh */
+.choco-milk-wrap {
+  right: 44px;
+  bottom: -2px;
+  transform: rotate(28deg);
+  filter: drop-shadow(0 4px 8px rgba(45, 18, 6, 0.32));
+  animation: gentleBob 3.4s ease-in-out infinite alternate;
+  animation-delay: 1.6s;
+  z-index: 7;
+}
+
+/* Khối thanh socola 3D */
+.choco-bar-item {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.38),
+    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+.dark-bar {
+  width: 36px;
+  height: 54px;
+  background: linear-gradient(135deg, #49210c 0%, #321406 50%, #200a02 100%);
+  padding: 3px;
+}
+
+.milk-bar {
+  width: 28px;
+  height: 38px;
+  background: linear-gradient(135deg, #743e20 0%, #582b13 50%, #3e1b09 100%);
+  padding: 2.5px;
+}
+
+/* Lớp bóng loáng (Glossy sheen) quét chéo thanh socola */
+.choco-bar-item::before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  left: -25px;
+  width: 90px;
+  height: 110px;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0.3) 48%,
+    rgba(255, 255, 255, 0.08) 58%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Lưới các ô múi socola */
+.choco-grid {
+  display: grid;
+  gap: 2.5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.grid-2x3 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.grid-2x2 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+/* Từng ô vuông socola (Chocolate tile) dập khối 3D */
+.choco-tile {
+  position: relative;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-bar .choco-tile {
+  background: linear-gradient(145deg, #5c2912 0%, #3b1707 60%, #250b02 100%);
+  box-shadow: 
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.42),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.85),
+    0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.milk-bar .choco-tile {
+  background: linear-gradient(145deg, #874b29 0%, #633318 60%, #44200c 100%);
+  box-shadow: 
+    inset 1px 1px 1.2px rgba(255, 255, 255, 0.45),
+    inset -1px -1px 1.2px rgba(0, 0, 0, 0.75),
+    0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Tâm gờ vát dập khuôn của từng viên socola */
+.choco-tile::after {
+  content: "";
+  width: 60%;
+  height: 60%;
+  border-radius: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, transparent 60%);
+  box-shadow: inset 0.5px 0.5px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* Lớp giấy bạc ánh vàng sang trọng bọc gốc thanh socola */
+.choco-gold-foil {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(
+    135deg,
+    #dfba52 0%,
+    #fff199 22%,
+    #b3861c 45%,
+    #fae588 70%,
+    #996f12 100%
+  );
+  border-top: 1.5px solid #fff6a8;
+  clip-path: polygon(0 28%, 18% 12%, 36% 32%, 56% 14%, 78% 34%, 100% 16%, 100% 100%, 0% 100%);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 3;
+}
+
+/* Hiệu ứng nảy khi tương tác chạm/click thanh socola */
+.choco-pop-anim {
+  animation: chocoBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+@keyframes chocoBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.22) translateY(-8px); }
+  75% { transform: scale(0.95) translateY(2px); }
+  100% { transform: scale(1); }
+}
+
+/* Hiệu ứng nổi bóng bay socola/tim khi click */
+.choco-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 18px;
+  user-select: none;
+  z-index: 99;
+  animation: floatUpFade 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes floatUpFade {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translate(var(--tx, 0px), -35px) scale(1.15) rotate(var(--rot, 10deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx, 0px), -70px) scale(0.8) rotate(var(--rot, 20deg));
+  }
+}
+
 .cake-layer {
   position: relative;
   border-radius: 16px;

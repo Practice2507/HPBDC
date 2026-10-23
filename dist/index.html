@@ -29,8 +29,8 @@
       rel="stylesheet"
     />
 
-    <script type="module" crossorigin src="./assets/index-BNlHdx5c.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DWiw5S9K.css">
+    <script type="module" crossorigin src="./assets/index-BrjI9sVk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B1rhtN7x.css">
   </head>
   <body>
     <!-- Canvas pháo hoa và hạt lấp lánh nền -->
@@ -148,27 +148,60 @@
           <h2 class="congrats-title">🌸 Chúc Mừng Sinh Nhật 🌸</h2>
         </div>
 
-        <div class="gift-content-grid">
-          <!-- BÊN TRÁI: BỨC THƯ SINH NHẬT -->
-          <div class="letter-column">
-            <div class="envelope-wrapper" id="envelopeWrapper">
-              <div class="envelope" id="envelope">
-                <!-- Nắp phong bì -->
+        <div class="gift-content-grid" id="giftContentGrid">
+          <!-- BÊN TRÁI: CỘT BỨC THƯ (THƯ CHÚC, NÚT BẤM VÀ BỨC THƯ TỰ GHI) -->
+          <div class="letter-column" id="letterColumn">
+            <!-- 1. THƯ CHÚC SINH NHẬT (Hiện ngay khi mở màn hình quà) -->
+            <div class="envelope-wrapper wish-envelope" id="wishEnvelopeWrapper">
+              <div class="envelope opened" id="wishEnvelope">
                 <div class="envelope-flap"></div>
-
-                <!-- Tờ giấy thư bên trong -->
-                <div class="letter-paper" id="letterPaper">
-                  <div class="letter-stamp">💌 21/11/2007</div>
+                <div class="letter-paper wish-paper">
+                  <div class="letter-stamp">21/11/2007</div>
                   <div class="letter-header">
-                    <h3 id="letterGreeting">Gửi cậu</h3>
-                    <div class="letter-date" id="letterDate">
+                    <h3 id="wishLetterGreeting">Gửi cậu</h3>
+                    <div class="letter-date" id="wishLetterDate">
                       Ngày sinh nhật đặc biệt ✨
                     </div>
                   </div>
 
-                  <div class="letter-body" id="letterContent"></div>
+                  <div class="letter-body" id="wishLetterContent"></div>
 
-                  <div class="letter-signature" id="letterSign">
+                  <div class="letter-signature" id="wishLetterSign">
+                    <br />
+                    <strong>TNNH</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. NÚT HIỆN Ở DƯỚI THƯ CHÚC (Xuất hiện sau 4 giây) -->
+            <div class="letter-reveal-box" id="letterRevealBox" style="display: none;">
+              <button
+                type="button"
+                class="reveal-letter-btn"
+                id="revealLetterBtn"
+                aria-label="Tớ có vài lời muốn gửi cậu"
+              >
+                <span class="btn-text">Tớ có vài lời muốn gửi cậu</span>
+              </button>
+            </div>
+
+            <!-- 3. BỨC THƯ TỰ GHI NỘI DUNG (Hiện khi bấm nút, kèm tiếng nhạc) -->
+            <div class="envelope-wrapper story-envelope" id="storyEnvelopeWrapper" style="display: none;">
+              <div class="envelope" id="storyEnvelope">
+                <div class="envelope-flap"></div>
+                <div class="letter-paper story-paper">
+                  <div class="letter-stamp">Lời từ trái tim</div>
+                  <div class="letter-header">
+                    <h3 id="storyLetterGreeting">Về tớ trong thời gian qua...</h3>
+                    <div class="letter-date" id="storyLetterDate">
+                      Bức thư gửi riêng cho cậu ✨
+                    </div>
+                  </div>
+
+                  <div class="letter-body" id="storyLetterContent"></div>
+
+                  <div class="letter-signature" id="storyLetterSign">
                     <br />
                     <strong>TNNH</strong>
                   </div>
@@ -281,10 +314,16 @@
       </div>
     </section>
 
-    <!-- PHẦN TỬ AUDIO: Tự phát song.mp3 khi mở khóa 2s -->
+    <!-- PHẦN TỬ AUDIO: Phát song.mp3 khi bấm nút mở bức thư -->
     <audio id="bgMusic" preload="auto">
       <source src="./assets/song-BgRp5aIp.mp3" type="audio/mpeg" />
+      <source src="./assets/song-BtaIbITU.m4a" type="audio/mp4" />
     </audio>
+
+    <!-- Nút bật/tắt nhạc nổi (hiển thị khi nhạc bắt đầu phát) -->
+    <button id="musicToggleBtn" class="music-toggle-btn hidden" aria-label="Bật hoặc tắt nhạc">
+      <span class="music-note-icon">🎵</span>
+    </button>
 
     
 <!-- EmailJS SDK -->

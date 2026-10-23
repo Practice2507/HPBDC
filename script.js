@@ -18,20 +18,39 @@
 
   const introScreen = document.getElementById("introScreen");
   const giftScreen = document.getElementById("giftScreen");
+  const giftContentGrid = document.getElementById("giftContentGrid");
 
   const touchArea = document.getElementById("touchArea");
   const progressFill = document.getElementById("progressFill");
   const timerCountdown = document.getElementById("timerCountdown");
   const touchPrompt = document.getElementById("touchPrompt");
 
+  const letterRevealBox = document.getElementById("letterRevealBox");
+  const revealLetterBtn = document.getElementById("revealLetterBtn");
+  const wishEnvelopeWrapper = document.getElementById("wishEnvelopeWrapper");
+  const wishEnvelope = document.getElementById("wishEnvelope");
+  const storyEnvelopeWrapper = document.getElementById("storyEnvelopeWrapper");
+  const storyEnvelope = document.getElementById("storyEnvelope");
+
   const bgMusic = document.getElementById("bgMusic");
+  const musicToggleBtn = document.getElementById("musicToggleBtn");
   const sparkCore = document.getElementById("sparkCore");
 
   // Chu vi vòng tròn tiến trình (2 * PI * 72 ≈ 452.389)
   const RING_CIRCUMFERENCE = 452.389;
 
-  const LETTER_PARAGRAPHS = [
+  // ============================================================
+  // 👉 1. NỘI DUNG THƯ CHÚC SINH NHẬT (Hiện ngay khi mở màn hình):
+  // ============================================================
+  const WISH_PARAGRAPHS = [
     "Nay là sinh nhật của cậu, tớ chúc cậu luôn hạnh phúc, vui vẻ, có sức khỏe để làm những điều mình thích, bớt lo âu suy nghĩ và luôn tích cực bên gia đình nha.",
+    "Chúc mừng sinh nhật cậu nhé ✨",
+  ];
+
+  // ============================================================
+  // 👉 2. NỘI DUNG BỨC THƯ TỰ GHI (Hiện khi bấm nút dưới thư chúc):
+  // ============================================================
+  const STORY_PARAGRAPHS = [
     "Sau thời gian qua, tớ đã nghiêm túc nhìn lại và tớ muốn xin lỗi cậu cho đàng hoàng.",
     "Tớ không kiểm soát được cảm xúc: khi nóng giận, tớ nói những điều làm cậu thấy mình không được coi trọng.",
     "Những lần cãi nhau trước, tớ không giải quyết nên mọi thứ cứ lặp lại, khiến cậu kiệt sức. Tớ cũng đã bỏ qua cảm xúc và không chịu lắng nghe cậu. Tớ hứa nhưng chỉ nói mà không làm được nên cậu thấy mệt và thất vọng.",
@@ -41,14 +60,23 @@
     "Chúc mừng sinh nhật cậu nhé ✨",
   ];
 
-  function fillLetterContent() {
-    const letterContent = document.getElementById("letterContent");
-    if (!letterContent || letterContent.childElementCount > 0) return;
+  function fillWishLetterContent() {
+    const el = document.getElementById("wishLetterContent");
+    if (!el || el.children.length > 0 || el.textContent.trim().length > 0) return;
+    WISH_PARAGRAPHS.forEach((text) => {
+      const p = document.createElement("p");
+      p.textContent = text;
+      el.appendChild(p);
+    });
+  }
 
-    LETTER_PARAGRAPHS.forEach((text) => {
-      const paragraph = document.createElement("p");
-      paragraph.textContent = text;
-      letterContent.appendChild(paragraph);
+  function fillStoryLetterContent() {
+    const el = document.getElementById("storyLetterContent");
+    if (!el || el.children.length > 0 || el.textContent.trim().length > 0) return;
+    STORY_PARAGRAPHS.forEach((text) => {
+      const p = document.createElement("p");
+      p.textContent = text;
+      el.appendChild(p);
     });
   }
 
@@ -498,15 +526,13 @@
       }, i * 180);
     }
 
-    // TỰ ĐỘNG PHÁT BÀI HÁT SINH NHẬT SAU 2 GIÂY DÍ TAY
-    playBirthdayMusic();
+    // ❌ KHÔNG PHÁT NHẠC VỘI TẠI ĐÂY (Theo yêu cầu: sau khi dí 2s xong thì chưa có nhạc)
 
     // Chuyển màn hình từ Màn 1 sang Màn 2
     setTimeout(() => {
       introScreen.classList.remove("active");
       introScreen.classList.add("hidden");
 
-      fillLetterContent();
       giftScreen.classList.remove("hidden");
       giftScreen.classList.add("active");
 
@@ -515,15 +541,17 @@
       // Nến pháo hoa bắn tia lửa rực rỡ
       startSparklerCandle();
 
-      // Mở phong bì thư
-      setTimeout(() => {
-        const envelope = document.getElementById("envelope");
-        if (envelope) envelope.classList.add("opened");
-      }, 400);
+      // Điền nội dung Thư chúc mừng sinh nhật
+      fillWishLetterContent();
 
       // Tắt flash
       flash.classList.remove("flash-active");
       setTimeout(() => flash.remove(), 600);
+
+      // 👉 SAU KHI DÍ 2S XONG, CHỜ ĐÚNG 4 GIÂY SAU HIỆN NÚT BẤM Ở DƯỚI THƯ CHÚC
+      setTimeout(() => {
+        showLetterRevealButton();
+      }, 4000);
     }, 450);
   }
 
@@ -613,12 +641,11 @@
   requestAnimationFrame(animateSparkler);
 
   // ============================================================
-  // 7. ÂM NHẠC SINH NHẬT TỰ ĐỘNG PHÁT SAU 2 GIÂY DÍ TAY
+  // 7. ÂM NHẠC SINH NHẬT (PHÁT KHI BẤM NÚT MỞ BỨC THƯ)
   // ============================================================
   function playBirthdayMusic() {
     if (!bgMusic) return;
 
-    // Tự động phát bài hát "toidaidot" của GREY D từ câu "Ngày hôm ấy đã quá ngốc..."
     bgMusic.currentTime = 0;
     const playPromise = bgMusic.play();
     if (playPromise !== undefined) {
@@ -627,9 +654,13 @@
           console.log(
             "Đang phát toidaidot (GREY D) từ câu: Ngày hôm ấy đã quá ngốc...",
           );
+          if (musicToggleBtn) {
+            musicToggleBtn.classList.remove("hidden");
+            musicToggleBtn.classList.add("playing");
+          }
         })
         .catch((err) => {
-          console.warn("Lỗi autoplay audio, kích hoạt fallback:", err);
+          console.warn("Lỗi phát audio, kích hoạt fallback:", err);
           startWebAudioBirthdayTune();
         });
     }
@@ -779,6 +810,134 @@
   }
 
   setupChocolateInteractions();
+
+  // ============================================================
+  // 9. NÚT HIỆN SAU 4 GIÂY: BẤM ĐỂ MỞ BỨC THƯ & PHÁT TIẾNG NHẠC
+  // ============================================================
+  function showLetterRevealButton() {
+    if (!letterRevealBox) return;
+    letterRevealBox.style.display = "flex";
+    void letterRevealBox.offsetWidth;
+    letterRevealBox.classList.remove("fade-out");
+    letterRevealBox.classList.add("visible");
+
+    // Rung nhẹ điện thoại báo hiệu nút xuất hiện
+    if (navigator.vibrate) {
+      try {
+        navigator.vibrate([40, 30, 60]);
+      } catch (e) {}
+    }
+
+    // Hiệu ứng pháo hoa nhẹ điểm xuyết quanh nút
+    launchFirework(screenWidth * 0.5, screenHeight * 0.65, 35);
+  }
+
+  let hasOpenedLetter = false;
+  function handleLetterRevealClick() {
+    if (hasOpenedLetter) return;
+    hasOpenedLetter = true;
+
+    // 1. Đồng thời phát tiếng nhạc lên ngay khi bấm nút
+    playBirthdayMusic();
+
+    // 2. Rung haptic phản hồi
+    if (navigator.vibrate) {
+      try {
+        navigator.vibrate([60, 40, 100]);
+      } catch (e) {}
+    }
+
+    // 3. Gửi thông báo nếu có cấu hình Telegram
+    try {
+      notifyTelegram(
+        "💌 Người ấy đã bấm nút mở đọc bức thư tâm sự!",
+        "hpbdc_tg_letter_opened",
+      );
+    } catch (e) {}
+
+    // 4. Hoạt ảnh biến mất mượt mà của nút bấm
+    if (letterRevealBox) {
+      letterRevealBox.classList.add("fade-out");
+      setTimeout(() => {
+        letterRevealBox.style.display = "none";
+      }, 350);
+    }
+
+    // 5. Mở bức thư tự ghi nội dung (hiện ở dưới thư chúc)
+    if (storyEnvelopeWrapper) {
+      storyEnvelopeWrapper.style.display = "block";
+      fillStoryLetterContent();
+
+      void storyEnvelopeWrapper.offsetWidth;
+      storyEnvelopeWrapper.classList.add("revealed");
+
+      setTimeout(() => {
+        if (storyEnvelope) {
+          storyEnvelope.classList.add("opened");
+        }
+      }, 200);
+
+      // Cuộn màn hình mượt mà đến bức thư để người nhận đọc trọn vẹn
+      setTimeout(() => {
+        storyEnvelopeWrapper.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 350);
+    }
+
+    // 7. Loạt pháo hoa lung linh chào mừng khoảnh khắc mở thư
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        launchFirework(
+          Math.random() * screenWidth * 0.8 + screenWidth * 0.1,
+          Math.random() * (screenHeight * 0.45) + 60,
+          60,
+        );
+      }, i * 200);
+    }
+  }
+
+  function setupLetterReveal() {
+    if (revealLetterBtn) {
+      revealLetterBtn.addEventListener("click", handleLetterRevealClick);
+      revealLetterBtn.addEventListener(
+        "touchstart",
+        () => {
+          warmUpAudio();
+        },
+        { passive: true },
+      );
+    }
+  }
+
+  function setupMusicControls() {
+    if (!musicToggleBtn || !bgMusic) return;
+
+    musicToggleBtn.addEventListener("click", () => {
+      warmUpAudio();
+      if (bgMusic.paused) {
+        bgMusic
+          .play()
+          .then(() => {
+            musicToggleBtn.classList.add("playing");
+          })
+          .catch(() => {});
+      } else {
+        bgMusic.pause();
+        musicToggleBtn.classList.remove("playing");
+      }
+    });
+
+    bgMusic.addEventListener("play", () => {
+      musicToggleBtn.classList.remove("hidden");
+      musicToggleBtn.classList.add("playing");
+    });
+
+    bgMusic.addEventListener("pause", () => {
+      musicToggleBtn.classList.remove("playing");
+    });
+  }
+
+  setupLetterReveal();
+  setupMusicControls();
 
   notifyTelegram("🎂 Có người vừa mở link quà sinh nhật", "hpbdc_tg_opened");
 })();
